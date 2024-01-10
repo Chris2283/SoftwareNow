@@ -1,0 +1,39 @@
+from PIL import Image
+import time
+
+# Load the image - File path 'C:\\Users\\chris\\Downloads\\chapter1.jpg' will need to be changed depending on where the chapter1.jpg is stored for each user
+image = Image.open('C:\\Users\\chris\\Downloads\\chapter1.jpg')
+pixels = image.load()
+
+# Get the time
+current_time = int(time.time())
+
+# Create a number using the  time
+generated_number = (current_time % 100) + 50
+
+# Check if the number is even
+if generated_number % 2 == 0:
+    generated_number += 10
+
+# To cycle through across the image, changing the RGB values at each pixel.
+for i in range(image.width):
+    for j in range(image.height):
+        # Get the original pixel values
+        r, g, b = pixels[i, j]
+
+        # Add the created number to the original values
+        new_r = r + generated_number
+        new_g = g + generated_number
+        new_b = b + generated_number
+
+        # Set the new pixel values for the new Chaper1out image
+        pixels[i, j] = (new_r, new_g, new_b)
+
+# Save the modified image - File path 'C:\\Users\\chris\\Downloads\\chapter1out.jpg' will need to be changed depending on where the output image is to be saved by users.
+image.save('C:\\Users\\chris\\Downloads\\chapter1out.png')
+
+# Calculate the sum of all red pixel values
+red_sum = sum([pixels[i, j][0] for i in range(image.width) for j in range(image.height)])
+
+# Output the sum
+print("Sum of all red pixel values:", red_sum)
